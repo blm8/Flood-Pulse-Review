@@ -4,19 +4,48 @@
 
 # Read Me file? (y/n):  y
 
+install.packages("knitr")
+library(knitr)
+install.packages("hysteresis")
+library(hysteresis)
 
-#######################################################################
-##  Figure //. Holling type alternative neutrally stable equilibria  ##
-#######################################################################
 
-# Tile 1
+###############################################################
+##  Figure 2a. Discharge & floodplain water depth over time  ##
+###############################################################
 
 rm(list=ls())
 
-par(mfrow=c(3,2))
+par(mfrow=c(3, 1))
 
-par(mar=c(1, 2, 1, 2)) # Bottom, left, top, right
-par(oma=c(4, 4, 4, 4))
+par(mar=c(2, 3, 2, 3)) # Bottom, left, top, right
+par(oma=c(4, 3, 3, 3))
+x <- seq(-4, 4, length=100)
+hx <- dnorm(x)
+min(hx)
+max(hx)
+plot(x, hx, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-4, 4), ylim=c(0, 0.43), col="darkblue")
+abline(h=0.25, col="dimgray", lwd=2, lty=2)
+points(-0.96, 0.25, pch=19, col="dimgray", cex=2)
+points(-0.96, 0.25, pch=1, col="dimgray", cex=4)
+points(-0.96, 0.25, pch=1, col="dimgray", cex=6)
+points(0.96, 0.25, pch=19, col="darkblue", cex=2)
+points(0.96, 0.25, pch=1, col="darkblue", cex=4)
+par(new=TRUE)
+plot(x, hx, type="l", lty=1, lwd=2, xlab="", bty="n", ylab="", xaxt="n", yaxt="n", xlim=c(-4.5, 3.5), ylim=c(0, 0.43), col="forestgreen")
+mtext(expression("Discharge"), side=2, cex=1.6, font=1, line=1)
+mtext(expression("Floodplain Water Depth"), side=4, cex=1.6, font=1, line=2.25, col="forestgreen")
+mtext(expression("Time"), side=1, cex=1.6, font=1, line=2)
+legend("topleft", inset=-0.025, expression((a)), bty="n", cex=2.25)
+
+
+#######################################################################
+##  Figure 2b. Holling type alternative neutrally stable equilibria  ##
+#######################################################################
+
+# Tile 1 # Figure
+
+par(mar=c(2, 3, 2, 3)) # Bottom, left, top, right
 hysteresis <- mloop(retention=0.5, n.points=100, period=99, extended.classical=T, phase.angle=1, b.x=-0.6, b.y=0.5)
 plot(hysteresis$x, hysteresis$y, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-1.6, 1.6), ylim=c(-1.6, 1.6), col="black")
 arrows(-0.529, 0.2, x1=-0.535, y1=0.22, length=0.1, angle=25, lwd=1.5, col="black")
@@ -36,22 +65,23 @@ points(0, -0.5, pch=1, col="dimgray", cex=4)
 points(0, 0.5, pch=19, col="dimgray", cex=2)
 points(0, 0.5, pch=1, col="dimgray", cex=4)
 points(0, 0.5, pch=1, col="dimgray", cex=6)
-mtext("Parameter Value", side=2, cex=1.6, font=1, line=1)
-mtext(expression("Discharge" ~ (m^{3} ~ s^{-1})), side=1, cex=1.6, font=1, line=2)
+mtext("Ecosystem Function", side=2, cex=1.6, font=1, line=1)
+mtext(expression("Discharge"), side=1, cex=1.6, font=1, line=2)
+legend("topleft", inset=-0.025, expression((b)), bty="n", cex=2.25)
 
 # Tile 2 # Legend
 
-par(mar=c(1, 2, 1, 2)) # Bottom, left, top, right
+par(mar=c(4, 9, 4, 9)) # Bottom, left, top, right
 plot(0, 0, type="l", lty=1, bty="n", lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-0.8, 0.8), ylim=c(-0.8, 0.8))
 text(0, 0.5, labels="Year 1", cex=2, font=1, col="black")
 text(0, 0.25, labels="Year 2", cex=2, font=1, col="dimgray")
 points(-0.7, 0, pch=19, col="dimgray", cex=2)
 points(-0.7, 0, pch=1, col="dimgray", cex=4)
 points(-0.7, 0, pch=1, col="dimgray", cex=6)
-text(0, 0, labels="Rising-water Equilibrium State", cex=2, font=1, col="dimgray")
+text(0, 0, labels="Rising-water", cex=2, font=1, col="dimgray")
 points(-0.7, -0.25, pch=19, col="dimgray", cex=2)
 points(-0.7, -0.25, pch=1, col="dimgray", cex=4)
-text(0, -0.25, labels="Falling-water Equilibrium State", cex=2, font=1, col="dimgray")
+text(0, -0.25, labels="Falling-water", cex=2, font=1, col="dimgray")
 
 
 #########################################
@@ -203,17 +233,19 @@ legend(x=-6, y=0.45, expression((a)), bty="n", cex=5)
 
 rm(list=ls())
 
-par(mfrow=c(3,2))
+par(mfrow=c(3,1))
 
-par(mar=c(1, 2, 1, 2)) # Bottom, left, top, right
+par(mar=c(3, 3, 1, 3)) # Bottom, left, top, right
 par(oma=c(5, 4, 4, 4))
 x <- seq(-4, 4, length=100)
 hx <- dnorm(x)
 min(hx)
 max(hx)
-plot(x, hx, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-4, 4), ylim=c(0, 0.43), col="darkblue")
+plot(x, hx, type="p", lty=1, lwd=2, xlab="", ylab="", pch="", xaxt="n", yaxt="n", xlim=c(-4.5, 4), ylim=c(0, 0.43), col="darkblue")
 par(new=TRUE)
-plot(x, hx, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-4.5, 3.5), ylim=c(0, 0.43), col="dimgray")
+plot(x, hx, type="l", lty=1, lwd=2, xlab="", bty="n", ylab="", xaxt="n", yaxt="n", xlim=c(-4, 4), ylim=c(0, 0.43), col="darkblue")
+par(new=TRUE)
+plot(x, hx, type="l", lty=1, lwd=2, xlab="", bty="n", ylab="", xaxt="n", yaxt="n", xlim=c(-4.5, 3.5), ylim=c(0, 0.43), col="dimgray")
 mtext(expression("Discharge" ~ (m^{3} ~ s^{-1})), side=2, cex=1.6, font=1, line=1)
 mtext(expression("Inundated" ~ "Floodplain" ~ (m^{2})), side=4, cex=1.6, font=1, line=2.25, col="dimgray")
 mtext(expression("Time" ~ (Days)), side=1, cex=1.6, font=1, line=2)
@@ -221,13 +253,15 @@ legend("topleft", expression((a)), bty="n", cex=2.25)
 
 # Tile 2
 
-par(mar=c(1, 2, 1, 2)) # Bottom, left, top, right
+par(mar=c(3, 3, 1, 3)) # Bottom, left, top, right
 x <- seq(-4, 4, length=100)
 y <- seq(-4, 4, length=100)
-plot(x, y, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-5, 5), ylim=c(5, -5), col="dimgray")
-mtext(expression("Mean" ~ "Water" ~ "Depth" ~ (m)), side=1, cex=1.6, font=1, line=2)
+plot(x, y, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-5, 5), ylim=c(5, -5), col="black")
+mtext(expression("Inundated" ~ "Floodplain" ~ (m^{2})), side=1, cex=1.6, font=1, line=2.25, col="dimgray")
+mtext(expression("Mean" ~ "Water" ~ "Depth" ~ (m)), side=2, cex=1.6, font=1, line=2)
 legend("topleft", expression((b)), bty="n", cex=2.25)
 
+3130+256+40+1000+2858+65+256 
 
 #######################################
 ##  Figure //.  Reduction of Carbon  ##
@@ -357,7 +391,7 @@ points(0, -0.5, pch=1, col="chartreuse3", cex=6)
 points(0, 0.5, pch=19, col="chartreuse3", cex=2)
 points(0, 0.5, pch=1, col="chartreuse3", cex=4)
 mtext("Periphyton", side=2, cex=1.6, font=1, line=1)
-mtext(expression("Discharge" ~ (m^{3} ~ s^{-1})), side=1, cex=1.6, font=1, line=2)
+mtext(expression("Discharge"), side=1, cex=1.6, font=1, line=2)
 legend("topleft", expression((d)), bty="n", cex=2.25)
 
 # Tile 6
@@ -384,7 +418,7 @@ points(0, -0.59, pch=1, col="chartreuse3", cex=6)
 points(0, 0.5, pch=19, col="chartreuse3", cex=2)
 points(0, 0.5, pch=1, col="chartreuse3", cex=4)
 mtext("Blue-green Algae", side=2, cex=1.6, font=1, line=1)
-mtext(expression("Discharge" ~ (m^{3} ~ s^{-1})), side=1, cex=1.6, font=1, line=2)
+mtext(expression("Discharge"), side=1, cex=1.6, font=1, line=2)
 legend("topleft", expression((e)), bty="n", cex=2.25)
 
 
@@ -426,7 +460,7 @@ points(0, -0.5, pch=1, col="chocolate4", cex=4)
 points(0, 0.5, pch=19, col="chocolate4", cex=2)
 points(0, 0.5, pch=1, col="chocolate4", cex=4)
 points(0, 0.5, pch=1, col="chocolate4", cex=6)
-mtext(expression("NEP" ~ (mg ~ C ~ m^{-2} ~ h^{-1})), side=2, cex=1.6, font=1, line=1)
+mtext(expression("NEP"), side=2, cex=1.6, font=1, line=1)
 legend("topleft", expression((a)), bty="n", cex=2.25)
   
 # Tile 2 # Legend
@@ -446,7 +480,7 @@ points(0, 0, pch=1, col="chocolate4", cex=8)
 text(0.35, 0, labels="High-water", cex=2, font=1)
 points(0, -0.25, pch=19, col="chocolate4", cex=2)
 points(0, -0.25, pch=1, col="chocolate4", cex=4)
-text("topleft", labels="Falling-water", cex=2, font=1)
+text(0.35, -0.25, labels="Falling-water", cex=2, font=1)
 
 # Tile 3
 
@@ -468,7 +502,7 @@ points(0, -0.5, pch=1, col="chocolate4", cex=4)
 points(0, 0.5, pch=19, col="chocolate4", cex=2)
 points(0, 0.5, pch=1, col="chocolate4", cex=4)
 points(0, 0.5, pch=1, col="chocolate4", cex=6)
-mtext(expression("Riverine" ~ "DOC" ~ (mg ~ L^{-1})), side=2, cex=1.6, font=1, line=1)
+mtext(expression("Riverine" ~ "DOC"), side=2, cex=1.6, font=1, line=1)
 legend("topleft", expression((b)), bty="n", cex=2.25)
 
 # Tile 4
@@ -491,7 +525,7 @@ points(0, -0.5, pch=1, col="chocolate4", cex=4)
 points(0, -0.5, pch=1, col="chocolate4", cex=6)
 points(0, 0.5, pch=19, col="chocolate4", cex=2)
 points(0, 0.5, pch=1, col="chocolate4", cex=4)
-mtext(expression("Floodplain" ~ "DOC" ~ (mg ~ L^{-1})), side=2, cex=1.6, font=1, line=1)
+mtext(expression("Floodplain" ~ "DOC"), side=2, cex=1.6, font=1, line=1)
 legend("topleft", expression((c)), bty="n", cex=2.25)
 
 # Tile 5
@@ -514,8 +548,8 @@ points(0, -0.5, pch=1, col="chocolate4", cex=4)
 points(0, -0.5, pch=1, col="chocolate4", cex=6)
 points(0, 0.5, pch=19, col="chocolate4", cex=2)
 points(0, 0.5, pch=1, col="chocolate4", cex=4)
-mtext(expression(pCO[2] ~ (mu*atm)), side=2, cex=1.6, font=1, line=1)
-mtext(expression("Discharge" ~ (m^{3} ~ s^{-1})), side=1, cex=1.6, font=1, line=2)
+mtext(expression(italic(p)*CO[2]), side=2, cex=1.6, font=1, line=1)
+mtext(expression("Discharge"), side=1, cex=1.6, font=1, line=2)
 legend("topleft", expression((d)), bty="n", cex=2.25)
 
 # Tile 6
@@ -537,7 +571,7 @@ points(0, -0.5, pch=1, col="dimgray", cex=4)
 points(0, 0.5, pch=19, col="dimgray", cex=2)
 points(0, 0.5, pch=1, col="dimgray", cex=4)
 points(0, 0.5, pch=1, col="dimgray", cex=6)
-mtext(expression("Percent" ~ O[2] ~ "Saturation"), side=4, cex=1.6, col="dimgray", font=1, line=2)
+mtext(expression("Dissolved" ~ O[2]), side=4, cex=1.6, col="dimgray", font=1, line=2)
 par(new=T)
 hysteresis <- mloop(retention=0.5, n.points=100, period=99, extended.classical=T, phase.angle=1, b.x=0.6, b.y=0.5)
 plot(hysteresis$x, hysteresis$y, type="l", lty=1, lwd=2, xlab="", ylab="", xaxt="n", yaxt="n", xlim=c(-0.8, 0.8), ylim=c(-0.8, 0.8))
@@ -556,7 +590,7 @@ points(0, -0.5, pch=1, col="chocolate4", cex=4)
 points(0, 0.5, pch=19, col="chocolate4", cex=2)
 points(0, 0.5, pch=1, col="chocolate4", cex=4)
 points(0, 0.5, pch=1, col="chocolate4", cex=6)
-mtext(expression(pCH[4] ~ (mu*atm)), side=2, cex=1.6, font=1, line=1)
-mtext(expression("Discharge" ~ (m^{3} ~ s^{-1})), side=1, cex=1.6, font=1, line=2)
+mtext(expression(italic(p)*CH[4]), side=2, cex=1.6, font=1, line=1)
+mtext(expression("Discharge"), side=1, cex=1.6, font=1, line=2)
 legend("topleft", expression((e)), bty="n", cex=2.25)
 
